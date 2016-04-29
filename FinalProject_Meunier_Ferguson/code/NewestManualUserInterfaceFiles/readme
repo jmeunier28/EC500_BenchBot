@@ -1,0 +1,52 @@
+----Quick Instructions---
+If the "maxStepDataTuplesCanSend" variable in DobotGUIMain.py is set to 1000, upload the SimpleReadAndDisplayDataMax3000noprint.ino file to the
+arduino. If it is set to 1, upload the SimpleReadAndDisplayDataMax3noprint.ino file. Alternatively, specify your own "maxStepDataTuplesCanSend" 
+value. Just be sure to edit the "MAX_INPUT" variable in the .ino file (either one is fine) to be triple the value of the maxStepDataTuplesCanSend 
+variable. The MAX_INPUT variable in the firmware simply defines the maximum number of bytes that the arduino can receive and process at once.
+
+
+----Full Instructions-----
+Two different serial communication protocols were developed. One sends a 3-tuple of angles (of type float) that describe a point B to move to,
+to the arduino, which then moves there using the AccelStepper library. The other protocol (the one located here) uses a character based protocol 
+to send a custom defined sequence of steps that describe a line. The step sequence data for a line is a list of chars structured as follows:
+
+['l', <Dir>, <Dir>, <Dir>, 's', <step-base>, <step-upperArm>, <step-lowerArm>, ..., 'e']
+
+
+------(Header Data)-----
+'l' indicates start of a single line's data  
+
+<Dir> Three characters after the 'l' character describe the direction that the 3 stepper motors on the robot arm need to rotate in. 
+      In order from left to right (positions 1-3), the directions are specified for the base, upper arm, and lower arm stepper motors respectively.
+      Each direction character takes on the value of 'H' or 'L' (upper case only). Depending on the character, the direction of the stepper motor
+      is specified by sending a HIGH ('H') or LOW ('L') signal to the appropriate STEP pin on the A4988 motor driver. 
+      
+'s' indicates the start of a single line's step sequence
+
+------(Step Data)-----
+<step> A series of n steps (in 3-tuples) defines the step sequence needed for the arm to move in a straight line. In order from left to right,
+       the step instruction for the base, upper arm, and lower arm stepper motor is given respectively. Each <step> character takes on the
+       value of '1' (take a step) or '0' (don't take a step).
+
+------(Footer Data)-----
+'e' indicates the end of the line data
+
+      
+The ['l',<Dir>,<Dir>,<Dir>,'s'] section of the line data is reffered to as the "Header data" and is immediately sent to the arduino.
+All of the step sequence line data (including the ending 'e' character) is chopped up into packets of 3-tuples to send to the arduino. The
+size of the packets can be defined in the code by changing the value of the "maxStepDataTuplesCanSend" variable. A handhsaking algorithm is
+used to help ensure no data is lost when communicating with the arduino. The handshaking algorithm simply involves the python code waiting 
+for the arduino to finish processing a packet of data (indicated by the arduino sending a message to the python code) before sending the next
+packet of data. Without the handshaking algorithm, data will be sent to the arduino faster than it can process it and significant data will 
+be lost.
+
+To better understand the communication protocol, consider a line specified by 3300 3-tuples worth of step sequence data. 
+If maxStepDataTuplesCanSend = 1000, the python code sends 1000 3-tuples (3000 chars) to the arduino. The arduino stores the step characters 
+in an array and then iterates through it to execute the steps specified by the step sequence. Once it finishes moving the stepper motors, the
+arduino sends a "done" signal (literally the string "done") to the python code. The python code, which is in a while loop waiting for this 
+signal, receives the message and either sends the next packet or continues on if no more packets are to be sent.
+
+By setting maxStepDataTuplesCanSend to 1 or a low number less than 20 or so, one can get smooth linear movement without noticeable pauses 
+in between the steps specified by an otherwise large packet of data; however, the speed will be painfully slow since it takes considerable 
+time for the packet data to be sent, received, parsed, and processed by the arduino. Switching to a binary protocol or using a raspberry pi 
+to send the STEP signals may remedy this problem.

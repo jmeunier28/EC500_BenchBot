@@ -1,0 +1,192 @@
+[
+  {
+    "collection": "TipBox",
+    "parameters": [
+      {
+        "3DLocation": {
+          "x": 2.0,
+          "y": -3.0,
+          "z": -8.0
+        },
+        "Dimensions": {
+          "height": 10,
+          "length": 12,
+          "width": 12
+        },
+        "Footprint": {
+          "x": 1,
+          "y": 2
+        },
+        "Location": {
+          "x": 160.0,
+          "y": 50.0,
+          "z": 215.0
+        },
+        "firstTipLocation": {
+          "x": 1,
+          "y": 1,
+          "z": 1
+        },
+        "gridDimensions": {
+          "columns": 12,
+          "rows": 8
+        },
+        "tipNum": {
+          "tip_number": 96
+        },
+        "tipSpacing": {
+          "column_spacing": 2,
+          "row_spacing": 2
+        }
+      }
+    ]
+  },
+  {
+    "collection": "TubeRack",
+    "parameters": [
+      {
+        "3DLocation": {
+          "x": 3.0,
+          "y": -2.0,
+          "z": -12.0
+        },
+        "Dimensions": {
+          "height": 30,
+          "length": 6,
+          "width": 30
+        },
+        "Footprint": {
+          "x": 1,
+          "y": 2
+        },
+        "Location": {
+          "x": 160.0,
+          "y": 0.0,
+          "z": 115.0
+        },
+        "firstTipLocation": {
+          "x": 1,
+          "y": 1,
+          "z": 1
+        },
+        "gridDimensions": {
+          "columns": 18,
+          "rows": 5
+        },
+        "tipNum": {
+          "well_number": 90
+        },
+        "tipSpacing": {
+          "column_spacing": 2,
+          "row_spacing": 2
+        },
+        "tubeHeight": {
+          "height": 20
+        }
+      }
+    ]
+  },
+  {
+    "collection": "MicroPlate",
+    "parameters": [
+      {
+        "3DLocation": {
+          "x": 2.0,
+          "y": -3.0,
+          "z": -6.0
+        },
+        "Dimensions": {
+          "height": 12,
+          "length": 4,
+          "width": 12
+        },
+        "Footprint": {
+          "x": 1,
+          "y": 2
+        },
+        "Location": {
+          "x": 150.0,
+          "y": 100.0,
+          "z": 180.0
+        },
+        "firstTipLocation": {
+          "x": 1,
+          "y": 1,
+          "z": 1
+        },
+        "gridDimensions": {
+          "columns": 12,
+          "rows": 8
+        },
+        "tipNum": {
+          "tip_number": 96
+        },
+        "tipSpacing": {
+          "column_spacing": 2,
+          "row_spacing": 2
+        }
+      }
+    ]
+  },
+  {
+    "collection": "WasteContainer",
+    "parameters": [
+      {
+        "3DLocation": {
+          "x": 5.0,
+          "y": -3.0,
+          "z": -4.5
+        },
+        "Dimensions": {
+          "height": 12,
+          "length": 5,
+          "width": 12
+        },
+        "Footprint": {
+          "x": 1,
+          "y": 2
+        },
+        "Location": {
+          "x": 0.0,
+          "y": 100.0,
+          "z": 50.0
+        },
+        "containerHole": {
+          "x:": 1,
+          "y": 1
+        },
+        "holeEdgePosition": {
+          "x": 1,
+          "y": 1,
+          "z": 1
+        }
+      }
+    ]
+  },
+  {
+    "collection": "Robot",
+    "parameters": [
+      {
+        "3DLocation": {
+          "x": 5.0,
+          "y": 0.0,
+          "z": -8.0
+        },
+        "Dimensions": {
+          "height": 45,
+          "length": 23,
+          "width": 12
+        },
+        "Footprint": {
+          "x": 1,
+          "y": 2
+        },
+        "Location": {
+          "x": 160.0,
+          "y": 0.0,
+          "z": 215.0
+        }
+      }
+    ]
+  }
+]
