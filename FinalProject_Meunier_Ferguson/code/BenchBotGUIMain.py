@@ -52,7 +52,7 @@ class DobotGUIApp(QMainWindow):
         self.ui.runButton.clicked.connect(self.run_path_way)
         self.ui.workspaceBox.addItem("PCR")
         self.ui.workspaceBox.addItem("Cloning")
-        self.ui.testButton.clicked.connect(self.set_path_boundaries)
+        #self.ui.testButton.clicked.connect(self.set_path_boundaries)
 
 
         # connect to menubar QAction item options for Task bar Dialog Box
@@ -306,12 +306,12 @@ class DobotGUIApp(QMainWindow):
         location. if it does the var is set to True. If it does not returns False
         '''
 
-        result = self.cross_product(loc_one,loc_two)
+        result = self.cross_product(loc_one,loc_two,point)
         var = False
         if result == 0:
-            result = self.dot_product(loc_one,loc_two)
+            result = self.dot_product(loc_one,loc_two,point)
             if result > 0:
-                distance = self.distance(loc_one,loc_two)
+                distance = self.distance(loc_one,loc_two,point)
                 if result < math.pow(distance,2):
                     var = True
         return var
@@ -368,11 +368,15 @@ class DobotGUIApp(QMainWindow):
     def distance(self,p0,p1):
         return math.sqrt(math.pow(p1[0]-p0[0],2)+math.pow(p1[1]-p0[1],2)+math.pow(p1[2]-p0[2],2))
 
-    def cross_product(self,p0,p1):
-        return list(itertools.product(p0,p1))
+    def cross_product(self,p0,p1,point):
+        diff = [p0[0] - point[0],p0[1]-point[1],p0[2]-point[2]]
+        diff2 = [point[0] - p1[0],point[1]-p1[1],point[2]-p1[2]]
+        return list(itertools.product(diff,diff2))
 
-    def dot_product(self,p0,p1):
-        return sum(p*q for p,q in zip(p0, p1))
+    def dot_product(self,p0,p1,point):
+        diff = [p0[0] - point[0],p0[1]-point[1],p0[2]-point[2]]
+        diff2 = [point[0] - p1[0],point[1]-p1[1],point[2]-p1[2]]
+        return sum(p*q for p,q in zip(diff, diff2))
 
     def move_to_cartesian_coordinate(self, moveToXFloat, moveToYFloat, moveToZFloat):
 
